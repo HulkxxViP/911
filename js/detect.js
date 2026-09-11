@@ -49,13 +49,15 @@ var Detect = (function () {
     for (var i = 0; i < ranges.length; i++) {
       var r = ranges[i];
       if (n >= fwToNum(r.low) && n <= fwToNum(r.high)) {
-        // explicit per-fw override wins
+        // explicit per-fw override wins (respect its status: full/userland/waiting)
         var overrideMap = consoleType === "ps4" ? HOST.ps4.stageOverride : HOST.ps5.stageOverride;
         if (overrideMap && overrideMap[fw]) {
+          var ov = overrideMap[fw];
           return {
             low: r.low, high: r.high, chain: "override",
-            chainName: overrideMap[fw].chainName || "Custom chain",
-            status: "full", override: overrideMap[fw]
+            chainName: ov.chainName || "Custom chain",
+            status: ov.status || r.status,
+            override: ov
           };
         }
         return { low: r.low, high: r.high, chain: r.chain, chainName: r.chainName, status: r.status };

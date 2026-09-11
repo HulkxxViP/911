@@ -59,11 +59,18 @@ var HOST = {
       { low: "12.50", high: "13.00", chain: "vue", chainName: "Vue + Netctrl", status: "full" },
       { low: "13.02", high: "13.52", chain: "waiting", chainName: "No public kernel exploit yet", status: "waiting" }
     ],
-    /* Per-firmware stage URLs. When STAGE_URL_OVERRIDE is set for a firmware
-       it takes precedence — this is where you plug the official chain files
-       from the community hosts (see exploits/README.md). Leave null to use
-       the generic loader path. */
-    stageOverride: {},
+    /* Per-firmware stage overrides. Two forms:
+       1. MIRROR (recommended): a verified community chain page that auto-runs
+          on load. The JAILBREAK button hands the console browser to it:
+            { type: "mirror", url: "https://...", chainName: "...", status: "full" }
+       2. STAGE FILES: local userland.js/kernel.js under exploits/ (or a remote
+          urlTemplate) for chains that support split-stage loading.
+       When an override exists it takes precedence over the generic loader. */
+    stageOverride: {
+      /* PS4 9.00 — PSFree (CVE-2022-22620) + Lapse kernel.
+         Self-contained app, auto-runs on page load (verified live 2026-09). */
+      "9.00": { type: "mirror", url: "https://bekahen.github.io/900/", chainName: "PSFree + Lapse kernel (mirror)", status: "full" }
+    },
     /* Payload file names looked up inside payloads/ (or remote base). */
     payloads: {
       goldhenBin: "goldhen.bin",        // PS4 GoldHEN (fake-signed)
