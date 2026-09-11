@@ -1,0 +1,11 @@
+# payload binaries are large — fetch them with tools/update-goldhen.*
+payloads/*.bin
+payloads/*.elf
+payloads/*.zip
+payloads/version.txt
+
+# local cruft
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
