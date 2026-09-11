@@ -7,7 +7,7 @@
 #        gh auth login
 #      then run this script straight away.
 #   B) Or create the empty repo in the browser first:
-#        https://github.com/new  ->  name: ps4-ps5-jailbreak-host
+#        https://github.com/new  ->  name: 911
 #      then run this script — it will only need to push.
 #
 # Step 2:
@@ -15,7 +15,7 @@
 # ============================================================================
 
 $ErrorActionPreference = "Stop"
-$RepoName = "ps4-ps5-jailbreak-host"
+$RepoName = "911"
 $Root = Resolve-Path (Join-Path $PSScriptRoot "..")
 
 Push-Location $Root

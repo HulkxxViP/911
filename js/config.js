@@ -21,8 +21,8 @@ var HOST = {
     version: "1.0.0",
     tagline: "Auto-detect \u00b7 One-Click Chains \u00b7 GoldHEN Cached On Device",
     githubUser: "hulkxxvip",
-    githubRepo: "hulkxxvip/ps4-ps5-jailbreak-host",
-    pagesUrl: "https://hulkxxvip.github.io/ps4-ps5-jailbreak-host/",
+    githubRepo: "HulkxxViP/911",
+    pagesUrl: "https://hulkxxvip.github.io/911/",
     year: 2026
   },
 

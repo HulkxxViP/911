@@ -91,8 +91,8 @@ brand: {
   author: "Hulk",
   version: "1.0.0",
   githubUser: "hulkxxvip",
-  githubRepo: "hulkxxvip/ps4-ps5-jailbreak-host",
-  pagesUrl: "https://hulkxxvip.github.io/ps4-ps5-jailbreak-host/",
+  githubRepo: "HulkxxViP/911",
+  pagesUrl: "https://hulkxxvip.github.io/911/",
   ...
 }
 ```
@@ -110,16 +110,16 @@ git commit -m "HULK PSx Jailbreak Host v1.0.0"
 git branch -M main
 
 # create the repo (needs a GitHub account + PAT or gh CLI)
-gh repo create ps4-ps5-jailbreak-host --public --source . --push
+gh repo create 911 --public --source . --push
 # or, without gh:
-git remote add origin https://github.com/<YOU>/ps4-ps5-jailbreak-host.git
+git remote add origin https://github.com/<YOU>/911.git
 git push -u origin main
 
 # enable Pages (repo -> Settings -> Pages -> deploy from branch: main, /
 ```
 
 The default `pagesUrl` in `js/config.js` already assumes
-`https://<user>.github.io/ps4-ps5-jailbreak-host/`.
+`https://<user>.github.io/911/`.
 
 > **Note on payloads in git:** `*.bin` / `*.elf` are git-ignored (they're
 > large). To host GoldHEN itself on GitHub Pages, run the updater and
