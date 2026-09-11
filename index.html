@@ -3,247 +3,38 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0b0f14">
-<meta name="description" content="HULK PSx Jailbreak Host - auto-detect PS4/PS5 firmware and load the correct WebKit jailbreak chain with GoldHEN payload caching.">
+<meta name="theme-color" content="#000000">
+<meta name="description" content="HULK PSx Jailbreak Host - auto-detect PS4/PS5 firmware and load the correct jailbreak chain with GoldHEN cached on device.">
 <title>HULK PSx Jailbreak Host</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#x1F4A5;</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23000'/><text x='50' y='72' font-size='62' font-weight='900' text-anchor='middle' fill='%236ee71a'>H</text></svg>">
 <link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<!-- ===================== HEADER ===================== -->
-<header class="site-header">
-  <div class="container header-inner">
-    <div class="brand">
-      <div class="brand-logo">H</div>
-      <div class="brand-text">
-        <h1>HULK <span>PSx Jailbreak Host</span></h1>
-        <p class="brand-tagline">Auto-detect &middot; One-Click Chains &middot; GoldHEN Cached On Device</p>
-      </div>
-    </div>
-    <div class="header-meta">
-      <span class="badge badge-version">v1.0.0</span>
-      <a class="badge badge-link" href="https://github.com/hulkxxvip/ps4-ps5-jailbreak-host" target="_blank" rel="noopener">GitHub</a>
-    </div>
+<div class="shell">
+
+  <!-- ======== PREMIUM BRAND ======== -->
+  <header class="brand">
+    <h1 class="hulk-logo">HULK</h1>
+    <p class="brand-sub">PSx JAILBREAK HOST &middot; AUTO-DETECT &middot; ONE CLICK</p>
+  </header>
+
+  <!-- ======== CODE BOX ======== -->
+  <div class="codebox" id="codeBox" aria-live="polite">
+    <div class="log-line status" id="statusLine">&gt; booting...</div>
   </div>
-</header>
 
-<!-- ===================== HERO / DETECT ===================== -->
-<section class="hero">
-  <div class="container">
-    <div class="detect-card" id="detectCard">
-      <div class="detect-row">
-        <div class="detect-cell">
-          <span class="detect-label">Console</span>
-          <span class="detect-value" id="detConsole">--</span>
-        </div>
-        <div class="detect-cell">
-          <span class="detect-label">Firmware</span>
-          <span class="detect-value" id="detFirmware">--</span>
-        </div>
-        <div class="detect-cell">
-          <span class="detect-label">Status</span>
-          <span class="detect-value" id="detStatus">Detecting...</span>
-        </div>
-        <div class="detect-cell">
-          <span class="detect-label">Recommended Chain</span>
-          <span class="detect-value" id="detChain">--</span>
-        </div>
-      </div>
-      <div class="detect-actions">
-        <button class="btn btn-primary" id="btnAutoDetect" type="button">Auto-Detect</button>
-        <button class="btn btn-success" id="btnRun" type="button">Run Jailbreak</button>
-        <button class="btn btn-outline" id="btnClearCache" type="button">Clear Cached Payloads</button>
-      </div>
-      <div class="manual-override">
-        <label for="ovConsole">Manual override (if detection fails):</label>
-        <select id="ovConsole">
-          <option value="">-- Console --</option>
-          <option value="ps4">PS4</option>
-          <option value="ps5">PS5</option>
-        </select>
-        <select id="ovFirmware">
-          <option value="">-- Firmware --</option>
-        </select>
-      </div>
-    </div>
+  <!-- ======== THE ONLY BUTTON ======== -->
+  <button class="jb" id="btnRun" type="button">JAILBREAK</button>
 
-    <!-- Aframe status -->
-    <div class="status-banner hidden" id="statusBanner">
-      <span id="statusBannerText">Jailbreak active until reboot.</span>
-    </div>
-  </div>
-</section>
+  <p class="minote">Tethered &middot; re-run after reboot &middot; payloads cached on device</p>
 
-<!-- ===================== MAIN TABS ===================== -->
-<main class="container">
-  <nav class="tabs" id="tabsNav">
-    <button class="tab active" data-tab="ps4" type="button">PS4 (Browser)</button>
-    <button class="tab" data-tab="ps5" type="button">PS5 (Y2JB)</button>
-    <button class="tab" data-tab="map" type="button">Firmware Map</button>
-    <button class="tab" data-tab="payloads" type="button">GoldHEN Payloads</button>
-    <button class="tab" data-tab="settings" type="button">Settings</button>
-    <button class="tab" data-tab="log" type="button">Log Console</button>
-  </nav>
+</div>
 
-  <!-- PS4 panel -->
-  <section class="panel active" id="panel-ps4">
-    <div class="panel-head">
-      <h2>PS4 &mdash; In-Browser WebKit Chains</h2>
-      <p>Open this page in the PS4 web browser. The host detects your firmware, loads the matching WebKit + kernel chain, then injects GoldHEN &mdash; all cached on the console so re-loads are instant.</p>
-    </div>
-    <div class="grid-2">
-      <div class="card">
-        <h3>Chain Stage</h3>
-        <div class="stage-row"><span class="stage-dot" id="s1dot"></span><span id="s1txt">Stage 1 &mdash; WebKit userland: idle</span></div>
-        <div class="stage-row"><span class="stage-dot" id="s2dot"></span><span id="s2txt">Stage 2 &mdash; Kernel exploit: idle</span></div>
-        <div class="stage-row"><span class="stage-dot" id="s3dot"></span><span id="s3txt">Stage 3 &mdash; GoldHEN payload: idle</span></div>
-        <div class="stage-row"><span class="stage-dot" id="s4dot"></span><span id="s4txt">Stage 4 &mdash; Cache &amp; persist: idle</span></div>
-      </div>
-      <div class="card">
-        <h3>What happens</h3>
-        <ol class="steps">
-          <li>Detect firmware from the browser user agent</li>
-          <li>Load the correct exploit chain for that firmware</li>
-          <li>Run WebKit userland + kernel stage</li>
-          <li>Inject latest GoldHEN payload (no USB needed)</li>
-          <li>Payload + exploit files are cached on the device</li>
-        </ol>
-        <div class="notice notice-warn">
-          <strong>Tethered:</strong> after a full power-cycle you must re-run the jailbreak. Caching only removes the downloads, not the re-trigger &mdash; that is a kernel/platform reality on every public chain.
-        </div>
-      </div>
-    </div>
-  </section>
+<footer class="minifoot">Crafted by <span class="hulk-name">Hulk</span> &middot; MIT &middot; Not affiliated with Sony Interactive Entertainment</footer>
 
-  <!-- PS5 panel -->
-  <section class="panel" id="panel-ps5">
-    <div class="panel-head">
-      <h2>PS5 &mdash; Y2JB + P2JB (WebKit via YouTube)</h2>
-      <p>The PS5 has no browseable browser, so its WebKit jailbreak runs inside the modded YouTube app (Y2JB framework). This host serves as your LAN payload server and controller.</p>
-    </div>
-    <div class="grid-2">
-      <div class="card">
-        <h3>LAN Server</h3>
-        <p>Run the included server on a PC connected to the same network, then push <code>p2jb.js</code> / <code>elfldr</code> to the PS5&rsquo;s Y2JB listener.</p>
-        <div class="code-block">
-          <code>node tools/serve.js</code> &nbsp;or&nbsp;
-          <code>powershell -File tools/serve.ps1</code>
-        </div>
-        <div class="form-row">
-          <label for="ps5Ip">PS5 IP (Y2JB listener)</label>
-          <input id="ps5Ip" type="text" placeholder="192.168.1.50">
-          <label for="ps5Port">Port</label>
-          <input id="ps5Port" type="number" value="9021">
-          <button class="btn btn-primary" id="btnPushP2JB" type="button">Push P2JB to PS5</button>
-          <button class="btn btn-outline" id="btnPushElf" type="button">Push ELF Loader</button>
-        </div>
-      </div>
-      <div class="card">
-        <h3>Y2JB Workflow</h3>
-        <ol class="steps">
-          <li>Restore the Y2JB system backup (Gezine/Y2JB) on your PS5</li>
-          <li>Install the matching YouTube app version for your firmware</li>
-          <li>Launch YouTube &rarr; load Y2JB (WebKit userland)</li>
-          <li>Push P2JB kernel payload from this host (may take 10&ndash;50 min &mdash; patience!)</li>
-          <li>aioSD / etaHEN / GoldHEN for PS5 via kstuff</li>
-        </ol>
-        <div class="notice notice-info">
-          <strong>Firmware 13.00+ (13.20 / 13.40):</strong> Y2JB userland works but no public kernel exploit exists yet. Stay on your current firmware &mdash; do NOT update.
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Firmware map panel -->
-  <section class="panel" id="panel-map">
-    <div class="panel-head">
-      <h2>Firmware Support Map</h2>
-      <p>Live matrix of jailbreakable firmware for PS4 and PS5 (as of this build). Follow the <a href="docs/SUPPORTED_FIRMWARES.md" target="_blank">companion doc</a> for the full changelog and sources.</p>
-    </div>
-    <div class="grid-2">
-      <div class="card">
-        <h3>PS4 &mdash; WebKit/Vue Chains</h3>
-        <div class="fw-table" id="fwTablePs4"></div>
-      </div>
-      <div class="card">
-        <h3>PS5 &mdash; Y2JB Chains</h3>
-        <div class="fw-table" id="fwTablePs5"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Payloads panel -->
-  <section class="panel" id="panel-payloads">
-    <div class="panel-head">
-      <h2>GoldHEN Payloads</h2>
-      <p>Check for the latest GoldHEN release from the official repository and cache it on this host.</p>
-    </div>
-    <div class="card">
-      <div class="form-row">
-        <button class="btn btn-primary" id="btnCheckGoldhen" type="button">Check Latest GoldHEN (GitHub API)</button>
-        <span id="goldhenStatus">Not checked yet.</span>
-      </div>
-      <div id="goldhenResult" class="goldhen-result hidden"></div>
-      <div class="notice notice-info">
-        <strong>Caching is automatic:</strong> once a payload is fetched it is stored via the Cache API / localStorage. Re-loading the jailbreak page offline uses the cached copy &mdash; instant, no re-download.
-      </div>
-    </div>
-  </section>
-
-  <!-- Settings panel -->
-  <section class="panel" id="panel-settings">
-    <div class="panel-head">
-      <h2>Settings &amp; Branding</h2>
-      <p>Host behavior is configured centrally in <code>js/config.js</code> &mdash; brand, version, GitHub links, payload sources and the firmware matrix.</p>
-    </div>
-    <div class="grid-2">
-      <div class="card">
-        <h3>Payload source mode</h3>
-        <label class="radio"><input type="radio" name="srcMode" value="local" checked> Local <code>payloads/</code> folder (recommended)</label>
-        <label class="radio"><input type="radio" name="srcMode" value="remote"> Remote URL (configurable)</label>
-        <div class="form-row hidden" id="remoteUrlRow">
-          <label for="remoteUrl">Remote payload base URL</label>
-          <input id="remoteUrl" type="text" placeholder="https://example.com/ps4/payloads/">
-        </div>
-        <button class="btn btn-outline" id="btnSaveSettings" type="button">Save Settings</button>
-      </div>
-      <div class="card">
-        <h3>Cache status</h3>
-        <div id="cacheStatus">Checking cache...</div>
-        <button class="btn btn-outline" id="btnClearCache2" type="button">Clear All Cached Payloads</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Log panel -->
-  <section class="panel" id="panel-log">
-    <div class="panel-head">
-      <h2>Log Console</h2>
-      <button class="btn btn-outline" id="btnClearLog" type="button">Clear Log</button>
-    </div>
-    <div class="log-console" id="logConsole">
-      <div class="log-line">[system] HULK PSx Jailbreak Host v1.0.0 ready.</div>
-    </div>
-  </section>
-</main>
-
-<!-- ===================== FOOTER ===================== -->
-<footer class="site-footer">
-  <div class="container">
-    <p class="disclaimer">
-      For security research and educational use on consoles you own. Jailbreaking voids your warranty, may risk an
-      account ban, and may violate the console&rsquo;s terms of service. Every public jailbreak is <strong>tethered</strong>:
-      it must be re-triggered after a full reboot. Exploit chains and payloads are the work of their respective
-      authors (theflow, karo218, SiSTRo/GoldHEN project, Gezine, matem6 and the community) &mdash; this host only
-      assembles, caches and presents them.
-    </p>
-    <p class="footer-brand">Crafted by <strong>Hulk</strong> &middot; MIT licensed host shell &middot; Not affiliated with Sony Interactive Entertainment</p>
-  </div>
-</footer>
-
-<!-- Scripts. Core logic is ES5-compatible so it also runs on the PS4's Safari-era browser. -->
+<!-- Core logic is ES5-compatible so it runs on the PS4's Safari-era browser. -->
 <script src="js/config.js"></script>
 <script src="js/detect.js"></script>
 <script src="js/cache.js"></script>

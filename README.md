@@ -35,13 +35,14 @@ your LAN) and it:
 
 | Feature | Where |
 |---------|-------|
-| PS4/PS5 + firmware auto-detection | `js/detect.js` (UA parsing, ES5-safe for PS4 Safari) |
+| **Minimal one-button UI** — pure black, glowing **HULK** brand, terminal code box, single JAILBREAK button | `index.html` + `css/style.css` |
+| PS4/PS5 + firmware auto-detection (silent, runs on load) | `js/detect.js` (UA parsing, ES5-safe for PS4 Safari) |
 | Firmware → chain matrix | `js/config.js` (fully editable) |
-| One-click chain runner with 4-stage progress | `js/exploit.js` + UI |
+| One-click chain runner with 4-stage terminal progress | `js/exploit.js` + code box |
 | On-device caching (Cache API + localStorage) | `js/cache.js` + `service-worker.js` |
 | GoldHEN release checker + payload updater | `js/goldhen.js` + `tools/update-goldhen.*` |
 | PS5 Y2JB + P2JB workflow + LAN push | `tools/serve.js` (raw-TCP payload push) |
-| Log console, firmware map, settings, PWA shell | UI tabs |
+| Hidden URL override for testing: `?console=ps4&fw=9.00` | `js/main.js` |
 
 ---
 
@@ -137,8 +138,8 @@ js/detect.js           Console/firmware auto-detection
 js/cache.js            On-device cache layer (Cache API + localStorage)
 js/goldhen.js          GoldHEN release check + payload loader
 js/exploit.js          4-stage chain runner
-js/ui.js               Firmware map + log console + tabs
-js/main.js             Boot + wiring
+js/ui.js               Minimal terminal UI (code box logger)
+js/main.js             Boot: silent auto-detect + single JAILBREAK button
 service-worker.js      Offline shell cache (optional, modern browsers)
 manifest.json          PWA manifest
 payloads/              GoldHEN + PS5 payloads (populate via tools/update-*)
